@@ -6,7 +6,7 @@ If you want to learn more about Quarkus, please visit its website: <https://quar
 
 The aim of this project is, to provide an example, where you can see that
 
-* the accessor of same property of the same class is searched each time, a value is accessed
+* the accessor of same property of the same class is searched very often
 * accessors for properties are searched, where this classes do not contain this properties
 
 There are 2 things which confuse me:

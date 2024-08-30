@@ -1,0 +1,42 @@
+2024-08-30 23:07:59,930 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [org.axo.con.AxonIQConsoleModule] (Quarkus Main Thread) 
+################################################################################################
+## You have not configured AxonIQ Console. AxonIQ Console provides out-of-the box monitoring  ##
+## and management capabilities for your Axon Application, starting with it is free.           ##
+## Visit https://console.axoniq.io for more information!                                      ##
+## Suppress this message by setting system property disable-axoniq-console-message to true.   ##
+################################################################################################
+
+2024-08-30 23:08:00,125 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.imp.AxonServerManagedChannel] (Quarkus Main Thread) Requesting connection details from localhost:8124
+2024-08-30 23:08:00,252 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.imp.AxonServerManagedChannel] (Quarkus Main Thread) Successfully connected to localhost:8124
+2024-08-30 23:08:00,257 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.imp.ControlChannelImpl] (Quarkus Main Thread) Connected instruction stream for context 'default'. Sending client identification
+2024-08-30 23:08:00,265 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) CommandChannel for context 'default' connected, 0 command handlers registered
+2024-08-30 23:08:00,267 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Registered handler for command 'at.meks.axon.sensors.domain.commands.AddSensorCommand' in context 'default'
+2024-08-30 23:08:00,269 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Registered handler for command 'at.meks.axon.sensors.domain.commands.ClientRegistrationCommand' in context 'default'
+2024-08-30 23:08:00,269 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Registered handler for command 'at.meks.axon.sensors.domain.commands.AddMeasurementCommand' in context 'default'
+2024-08-30 23:08:00,275 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [org.axo.con.AxonIQConsoleModule] (Quarkus Main Thread) 
+################################################################################################
+## You have not configured AxonIQ Console. AxonIQ Console provides out-of-the box monitoring  ##
+## and management capabilities for your Axon Application, starting with it is free.           ##
+## Visit https://console.axoniq.io for more information!                                      ##
+## Suppress this message by setting system property disable-axoniq-console-message to true.   ##
+################################################################################################
+
+2024-08-30 23:08:00,285 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.imp.AxonServerManagedChannel] (Quarkus Main Thread) Requesting connection details from localhost:8124
+2024-08-30 23:08:00,296 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.imp.AxonServerManagedChannel] (Quarkus Main Thread) Successfully connected to localhost:8124
+2024-08-30 23:08:00,297 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.imp.ControlChannelImpl] (Quarkus Main Thread) Connected instruction stream for context 'default'. Sending client identification
+2024-08-30 23:08:00,298 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) CommandChannel for context 'default' connected, 0 command handlers registered
+2024-08-30 23:08:00,302 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Registered handler for command 'at.meks.axon.sensors.domain.commands.AddSensorCommand' in context 'default'
+2024-08-30 23:08:00,303 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Registered handler for command 'at.meks.axon.sensors.domain.commands.ClientRegistrationCommand' in context 'default'
+2024-08-30 23:08:00,306 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Registered handler for command 'at.meks.axon.sensors.domain.commands.AddMeasurementCommand' in context 'default'
+2024-08-30 23:08:00,360 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.quarkus] (Quarkus Main Thread) code-with-quarkus 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.14.1) started in 1.611s. Listening on: http://localhost:8080
+2024-08-30 23:08:00,362 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+2024-08-30 23:08:00,366 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, rest, rest-jackson, smallrye-context-propagation, vertx]
+2024-08-30 23:08:40,308 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [at.mek.axo.sen.ada.res.GreetingResource] (executor-thread-1) Creating client
+2024-08-30 23:08:40,429 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [at.mek.axo.sen.ada.res.GreetingResource] (executor-thread-1) Creating sensors
+2024-08-30 23:08:42,238 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [at.mek.axo.sen.ada.res.GreetingResource] (executor-thread-1) Creating measurements
+2024-08-30 23:09:21,883 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) File change detected: /Users/meks/IdeaProjects/github/meks77/AxonSlowPropertyAccess/src/main/resources/application.properties
+2024-08-30 23:09:21,887 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) Restarting quarkus due to changes in application.properties.
+2024-08-30 23:09:21,907 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Deregistered handler for command 'at.meks.axon.sensors.domain.commands.AddSensorCommand' in context 'default'
+2024-08-30 23:09:21,909 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Deregistered handler for command 'at.meks.axon.sensors.domain.commands.ClientRegistrationCommand' in context 'default'
+2024-08-30 23:09:21,910 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.axo.axo.con.com.imp.CommandChannelImpl] (Quarkus Main Thread) Deregistered handler for command 'at.meks.axon.sensors.domain.commands.AddMeasurementCommand' in context 'default'
+2024-08-30 23:09:22,630 mbp-von-markus /Users/meks/.sdkman/candidates/java/21.0.3-tem/bin/java[42316] INFO  [io.quarkus] (Quarkus Main Thread) code-with-quarkus stopped in 0.740s

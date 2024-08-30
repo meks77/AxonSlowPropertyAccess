@@ -1,0 +1,5 @@
+### GET request to example server
+POST http://localhost:8080/startTestCase?numberOfClients=1
+Content-Type: */*
+
+###

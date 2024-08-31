@@ -3,8 +3,8 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 val quarkusPlatformGroupId: String by project
@@ -18,6 +18,9 @@ dependencies {
     implementation(platform("org.axonframework:axon-bom:4.10.0"))
     implementation("org.axonframework:axon-configuration")
     implementation("org.axonframework:axon-messaging")
+//    this implemention contains a cache with the information how to access a property of the model. It's not available in maven central
+//    If you would like to try it out, you have to build it localy from https://github.com/meks77/AxonFramework/tree/cputime-decrease-on-property-access
+//    implementation("org.axonframework:axon-messaging:4.10.1-SNAPSHOT-meks77")
     implementation("org.axonframework:axon-modelling")
     implementation("org.axonframework:axon-eventsourcing")
     implementation("org.axonframework:axon-server-connector")

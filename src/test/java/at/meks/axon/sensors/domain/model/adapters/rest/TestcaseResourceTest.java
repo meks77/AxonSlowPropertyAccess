@@ -2,13 +2,12 @@ package at.meks.axon.sensors.domain.model.adapters.rest;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.core.Response;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-class GreetingResourceTest {
+class TestcaseResourceTest {
     @Test
     void testHelloEndpoint() {
         given()

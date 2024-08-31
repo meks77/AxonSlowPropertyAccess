@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Path("/startTestCase")
-public class GreetingResource {
+public class TestcaseResource {
 
     @Inject
     CommandGateway commandGateway;
@@ -66,8 +66,7 @@ public class GreetingResource {
     private void createMeasurementsPerSensor(int numberOfMeasurements, Set<SensorId> sensorIds, ClientId clientId,
                                              Random random) {
         Log.infof("Creating %s measurements per sensor, for %s sensors", numberOfMeasurements, sensorIds.size());
-        sensorIds.parallelStream()
-                 .forEach(id -> IntStream.rangeClosed(0, numberOfMeasurements).boxed().parallel()
+        sensorIds.forEach(id -> IntStream.rangeClosed(0, numberOfMeasurements).boxed()
                                          .forEach(i -> commandGateway.sendAndWait(
                                                  new AddMeasurementCommand(clientId,
                                                                            id,

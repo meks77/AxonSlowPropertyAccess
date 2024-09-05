@@ -87,3 +87,7 @@ A meta model or a cache of responsible EventSourcingHandler for types of events 
 E.g. Currently at each entity instance it is tried to apply the event, even if this entity doesn't have a handler.
 
 That's just what came in my mind. I have to verify, if this is possible. 
+
+## Solution
+
+In the Version 4.10.1-SNAPSHOT the problem is fixed.

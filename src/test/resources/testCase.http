@@ -2,18 +2,22 @@
 POST http://localhost:8080/startTestCase?numberOfClients=1
 Content-Type: */*
 
-### Request 2: 11100 events: 100 clients; 10 sensors/per client; 10 measurments/sensor = 100 client created events + 1,000 sensor added events + 10,000 measurement events -> without cache: 17735ms (17 s 735 ms) with cache: 8446ms (8 s 446 ms)
+### Request 2: 11100 events: 100 clients; 10 sensors/per client; 10 measurments/sensor = 100 client created events + 1,000 sensor added events + 10,000 measurement events
+# -> without cache: 17735ms (17 s 735 ms) with cache: 8446ms (8 s 446 ms); 4.10.1-SNAPSHOT: 8276ms (8 s 276 ms)
 POST http://localhost:8080/startTestCase?numberOfClients=100&numberOfSensorsPerClient=10&numberOfMeasurementsPerSensor=10
 Content-Type: */*
 
-### Request 3: 31,100 events: 100 clients; 10 sensors/per client; 30 measurments/sensor = 100 client created events + 1,000 sensor added events + 30,000 measurement events -> without cache: 112944ms (1 m 52 s 944 ms); with cache: 37279ms (37 s 279 ms)
+### Request 3: 31,100 events: 100 clients; 10 sensors/per client; 30 measurments/sensor = 100 client created events + 1,000 sensor added events + 30,000 measurement events
+# -> without cache: 112944ms (1 m 52 s 944 ms); with cache: 37279ms (37 s 279 ms); 4.10.1-SNAPSHOT: 36663ms (36 s 663 ms)
 POST http://localhost:8080/startTestCase?numberOfClients=100&numberOfSensorsPerClient=10&numberOfMeasurementsPerSensor=30
 Content-Type: */*
 
-### Request 4: 33,300 events: 300 clients; 10 sensors/per client; 10 measurments/sensor = 300 client created events + 3000 sensor added events + 30,000 measurement events -> without cache: not tested with cache: 24711ms (24 s 711 ms)
+### Request 4: 33,300 events: 300 clients; 10 sensors/per client; 10 measurments/sensor = 300 client created events + 3000 sensor added events + 30,000 measurement events
+# -> without cache: not tested with cache: 24711ms (24 s 711 ms)
 POST http://localhost:8080/startTestCase?numberOfClients=300&numberOfSensorsPerClient=10&numberOfMeasurementsPerSensor=10
 Content-Type: */*
 
-### Request 5: 25,550 events: 50 clients; 10 sensors/per client; 60 measurments/sensor = 50 client created events + 500 sensor added events + 25,000 measurement events -> without cache: not tested; with cache: 83130ms (1 m 23 s 130 ms)
+### Request 5: 25,550 events: 50 clients; 10 sensors/per client; 60 measurments/sensor = 50 client created events + 500 sensor added events + 25,000 measurement events
+# -> without cache: not tested; with cache: 83130ms (1 m 23 s 130 ms); 4.10.1-SNAPSHOT: 80064ms (1 m 20 s 64 ms)
 POST http://localhost:8080/startTestCase?numberOfClients=100&numberOfSensorsPerClient=10&numberOfMeasurementsPerSensor=50
 Content-Type: */*

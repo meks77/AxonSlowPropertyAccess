@@ -1,12 +1,14 @@
 package at.meks.axon.sensors.domain.model;
 
 
+import at.meks.axon.sensors.domain.commands.AddManyMeasurementsCommand;
 import at.meks.axon.sensors.domain.commands.AddMeasurementCommand;
 import at.meks.axon.sensors.domain.commands.AddSensorCommand;
 import at.meks.axon.sensors.domain.commands.ClientRegistrationCommand;
 import at.meks.axon.sensors.domain.events.ClientRegisteredEvent;
 import at.meks.axon.sensors.domain.events.SensorAddedEvent;
 import at.meks.axon.sensors.domain.events.ValueMeasuredEvent;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -14,6 +16,7 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.modelling.command.AggregateMember;
 import org.axonframework.modelling.command.ForwardMatchingInstances;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -52,13 +55,25 @@ public class Client {
 
     @CommandHandler
     public void addMeassurement(AddMeasurementCommand command) {
-        AggregateLifecycle.apply(new ValueMeasuredEvent(command.sensorId(), command.measurementId(), command.unit(), command.measuredValue()));
+        AggregateLifecycle.apply(new ValueMeasuredEvent(command.sensorId(),
+                                                        command.measurementId(),
+                                                        command.unit(),
+                                                        command.measuredValue()));
     }
 
+    @CommandHandler
+    public void addMeasurements(AddManyMeasurementsCommand command) {
+        Arrays.stream(command.measurements())
+              .map(m -> new ValueMeasuredEvent(command.sensorId(), m.measurementId(), m.unit(), m.measuredValue()))
+              .forEach(AggregateLifecycle::apply);
+    }
+
+    @JsonProperty
     public Stream<Sensor> sensors() {
         return sensors.stream();
     }
 
+    @JsonProperty
     public ClientId clientId() {
         return id;
     }

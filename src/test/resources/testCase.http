@@ -21,3 +21,8 @@ Content-Type: */*
 # -> without cache: not tested; with cache: 83130ms (1 m 23 s 130 ms); 4.10.1-SNAPSHOT: 80064ms (1 m 20 s 64 ms)
 POST http://localhost:8080/startTestCase?numberOfClients=100&numberOfSensorsPerClient=10&numberOfMeasurementsPerSensor=50
 Content-Type: */*
+
+### Request 6: 1,448,000 events: 2000 clients; 3 sensors/per client; 240 measurments/sensor = 2,000 client created events + 6,000 sensor added events + 1,440,000 measurement events
+# -> without cache: not tested; with cache: not tested; 4.10.1-SNAPSHOT: 25654ms (25 s 654 ms)
+POST http://localhost:8080/startTestCase?numberOfClients=2000&numberOfSensorsPerClient=3&numberOfMeasurementsPerSensor=240
+Content-Type: */*

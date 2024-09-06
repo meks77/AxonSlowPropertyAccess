@@ -1,20 +1,18 @@
 package at.meks.axon.sensors.infrastructure.axon;
 
 import at.meks.axon.sensors.domain.model.Client;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.Produces;
-import org.axonframework.axonserver.connector.event.axon.AxonServerEventStore;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.Configurer;
 import org.axonframework.config.DefaultConfigurer;
-import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
 import org.axonframework.serialization.json.JacksonSerializer;
 
 @Startup
@@ -31,9 +29,11 @@ public class AxonProvider {
     }
 
     void init() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        ObjectMapper mapper = JsonMapper.builder()
+                                        .addModule(new AfterburnerModule())
+                                        .build();
+//        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+//        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         var serializer = JacksonSerializer.builder().objectMapper(mapper).build();
         Configurer configurer = DefaultConfigurer.defaultConfiguration()
                                                  .configureAggregate(Client.class)

@@ -1,8 +1,9 @@
 package at.meks.axon.sensors.adapters.rest;
 
-import at.meks.axon.sensors.domain.commands.AddMeasurementCommand;
+import at.meks.axon.sensors.domain.commands.AddManyMeasurementsCommand;
 import at.meks.axon.sensors.domain.commands.AddSensorCommand;
 import at.meks.axon.sensors.domain.commands.ClientRegistrationCommand;
+import at.meks.axon.sensors.domain.commands.MeasurementOfSensor;
 import at.meks.axon.sensors.domain.model.ClientId;
 import at.meks.axon.sensors.domain.model.MeasuredValue;
 import at.meks.axon.sensors.domain.model.MeasurementId;
@@ -21,6 +22,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -33,31 +35,42 @@ public class TestcaseResource {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public void startTestcase(@RestQuery int numberOfClients, @RestQuery int numberOfSensorsPerClient,
-                              @RestQuery int numberOfMeasurementsPerSensor) {
+                              @RestQuery int numberOfMeasurementsPerSensor) throws InterruptedException {
         var random = new Random();
         int numberOfClientsToCreate = numberOfClients <= 0 ? 1 : numberOfClients;
         int numberOfSensors = numberOfSensorsPerClient <= 0 ? 10 : numberOfSensorsPerClient;
         int numberOfMeasurements = numberOfMeasurementsPerSensor <= 0 ? 1 : numberOfMeasurementsPerSensor;
-        try (var executorService = Executors.newVirtualThreadPerTaskExecutor()) {
+        try (var executorService = Executors.newFixedThreadPool(30, Thread.ofVirtual().factory())) {
+            Log.info("starting testcase");
             for (int i = 0; i < numberOfClientsToCreate; i++) {
+                final int index = i;
                 executorService.submit(() -> {
+                    Log.infof("starting testcase for client %s", index);
                     ClientId clientId = createClient();
                     Set<SensorId> sensorIds = createSensors(numberOfSensors, clientId);
                     createMeasurementsPerSensor(numberOfMeasurements, sensorIds, clientId, random);
                 });
             }
+            Log.info("all executors created");
+            executorService.shutdown();
+            boolean terminated = executorService.awaitTermination(600, TimeUnit.SECONDS);
+            if (terminated) {
+                Log.info("Testcase finished");
+            } else {
+                Log.error("Waiting for testcase timed out");
+            }
         }
     }
 
     private ClientId createClient() {
-        Log.info("Creating client");
+        Log.debug("Creating client");
         ClientId clientId = new ClientId(UUID.randomUUID().toString());
         commandGateway.sendAndWait(new ClientRegistrationCommand(clientId));
         return clientId;
     }
 
     private Set<SensorId> createSensors(int numberOfSensors, ClientId clientId) {
-        Log.infof("Creating %s sensors", numberOfSensors);
+        Log.debugf("Creating %s sensors", numberOfSensors);
         Set<SensorId> sensorIds = newSensorIds(numberOfSensors);
         sensorIds.forEach(id -> commandGateway.sendAndWait(new AddSensorCommand(clientId, id)));
         return sensorIds;
@@ -65,14 +78,20 @@ public class TestcaseResource {
 
     private void createMeasurementsPerSensor(int numberOfMeasurements, Set<SensorId> sensorIds, ClientId clientId,
                                              Random random) {
-        Log.infof("Creating %s measurements per sensor, for %s sensors", numberOfMeasurements, sensorIds.size());
-        sensorIds.forEach(id -> IntStream.rangeClosed(0, numberOfMeasurements).boxed()
-                                         .forEach(i -> commandGateway.sendAndWait(
-                                                 new AddMeasurementCommand(clientId,
-                                                                           id,
-                                                                           newMeasurementId(),
-                                                                           new Unit("°C"),
-                                                                           randomValue(random)))));
+        Log.debugf("Creating %s measurements per sensor, for %s sensors", numberOfMeasurements, sensorIds.size());
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor())  {
+            sensorIds
+                    .forEach(id -> {
+                        MeasurementOfSensor[] measurments = IntStream.rangeClosed(0, numberOfMeasurements).boxed()
+                                                                     .map(i -> new MeasurementOfSensor(newMeasurementId(),
+                                                                                                       new Unit("°C"),
+                                                                                                       randomValue(random)))
+                                                                     .toArray(MeasurementOfSensor[]::new);
+                        executor.submit(() ->
+                        commandGateway.sendAndWait(new AddManyMeasurementsCommand(clientId, id, measurments)));
+                    });
+        }
+
     }
 
 

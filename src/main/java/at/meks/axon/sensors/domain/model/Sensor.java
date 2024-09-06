@@ -1,7 +1,7 @@
 package at.meks.axon.sensors.domain.model;
 
 import at.meks.axon.sensors.domain.events.ValueMeasuredEvent;
-import org.axonframework.eventhandling.EventHandler;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateMember;
 import org.axonframework.modelling.command.EntityId;
@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 public class Sensor {
 
     @EntityId
+    @JsonProperty
     private final SensorId sensorId;
 
     @AggregateMember(eventForwardingMode = ForwardMatchingInstances.class)
@@ -46,6 +47,7 @@ public class Sensor {
         return Objects.hashCode(sensorId);
     }
 
+    @JsonProperty
     public Stream<Measurement> measurements() {
         return measurements.stream();
     }

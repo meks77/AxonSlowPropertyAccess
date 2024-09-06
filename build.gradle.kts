@@ -15,7 +15,7 @@ val quarkusPlatformVersion: String by project
 dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
     implementation("io.quarkus:quarkus-arc")
-    implementation("io.quarkus:quarkus-rest-jackson")
+    implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
     // the bom 4.10.1-SNAPSHOT uses version 4.10.0. Therefor the bom couldn't be used
 //    implementation(enforcedPlatform("org.axonframework:axon-bom:4.10.1-SNAPSHOT"))
     implementation("org.axonframework:axon-configuration:4.10.1-SNAPSHOT")
@@ -28,6 +28,8 @@ dependencies {
     implementation("org.axonframework:axon-server-connector:4.10.1-SNAPSHOT")
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
+    implementation("com.fasterxml.jackson.module:jackson-module-afterburner")
+    implementation("com.fasterxml.jackson.module:jackson-module-blackbird")
 
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("org.assertj:assertj-core:3.20.2")

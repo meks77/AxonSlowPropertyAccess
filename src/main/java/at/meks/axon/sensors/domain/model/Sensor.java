@@ -1,6 +1,6 @@
 package at.meks.axon.sensors.domain.model;
 
-import at.meks.axon.sensors.domain.events.ValueMeasuredEvent;
+import at.meks.axon.sensors.domain.Api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateMember;
@@ -26,7 +26,7 @@ public class Sensor {
     }
 
     @EventSourcingHandler
-    protected void on(ValueMeasuredEvent event) {
+    protected void on(Api.Events.ValueMeasuredEvent event) {
         measurements.add(new Measurement(event.measurementId(), event.unit(), event.measuredValue()));
     }
 

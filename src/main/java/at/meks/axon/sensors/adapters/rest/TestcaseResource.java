@@ -1,9 +1,6 @@
 package at.meks.axon.sensors.adapters.rest;
 
-import at.meks.axon.sensors.domain.commands.AddManyMeasurementsCommand;
-import at.meks.axon.sensors.domain.commands.AddSensorCommand;
-import at.meks.axon.sensors.domain.commands.ClientRegistrationCommand;
-import at.meks.axon.sensors.domain.commands.MeasurementOfSensor;
+import at.meks.axon.sensors.domain.Api;
 import at.meks.axon.sensors.domain.model.ClientId;
 import at.meks.axon.sensors.domain.model.MeasuredValue;
 import at.meks.axon.sensors.domain.model.MeasurementId;
@@ -45,10 +42,12 @@ public class TestcaseResource {
             for (int i = 0; i < numberOfClientsToCreate; i++) {
                 final int index = i;
                 executorService.submit(() -> {
-                    Log.infof("starting testcase for client %s", index);
                     ClientId clientId = createClient();
                     Set<SensorId> sensorIds = createSensors(numberOfSensors, clientId);
                     createMeasurementsPerSensor(numberOfMeasurements, sensorIds, clientId, random);
+                    if (index % 99 == 0) {
+                        Log.infof("started testcase for %s clients", index + 1);
+                    }
                 });
             }
             Log.info("all executors created");
@@ -65,14 +64,14 @@ public class TestcaseResource {
     private ClientId createClient() {
         Log.debug("Creating client");
         ClientId clientId = new ClientId(UUID.randomUUID().toString());
-        commandGateway.sendAndWait(new ClientRegistrationCommand(clientId));
+        commandGateway.sendAndWait(new Api.Commands.ClientRegistrationCommand(clientId));
         return clientId;
     }
 
     private Set<SensorId> createSensors(int numberOfSensors, ClientId clientId) {
         Log.debugf("Creating %s sensors", numberOfSensors);
         Set<SensorId> sensorIds = newSensorIds(numberOfSensors);
-        sensorIds.forEach(id -> commandGateway.sendAndWait(new AddSensorCommand(clientId, id)));
+        sensorIds.forEach(id -> commandGateway.sendAndWait(new Api.Commands.AddSensorCommand(clientId, id)));
         return sensorIds;
     }
 
@@ -82,13 +81,13 @@ public class TestcaseResource {
         try (var executor = Executors.newVirtualThreadPerTaskExecutor())  {
             sensorIds
                     .forEach(id -> {
-                        MeasurementOfSensor[] measurments = IntStream.rangeClosed(0, numberOfMeasurements).boxed()
-                                                                     .map(i -> new MeasurementOfSensor(newMeasurementId(),
-                                                                                                       new Unit("°C"),
-                                                                                                       randomValue(random)))
-                                                                     .toArray(MeasurementOfSensor[]::new);
+                        Api.Commands.MeasurementOfSensor[] measurments = IntStream.rangeClosed(0, numberOfMeasurements).boxed()
+                                                                                  .map(i -> new Api.Commands.MeasurementOfSensor(newMeasurementId(),
+                                                                                                                                 new Unit("°C"),
+                                                                                                                                 randomValue(random)))
+                                                                                  .toArray(Api.Commands.MeasurementOfSensor[]::new);
                         executor.submit(() ->
-                        commandGateway.sendAndWait(new AddManyMeasurementsCommand(clientId, id, measurments)));
+                        commandGateway.sendAndWait(new Api.Commands.AddManyMeasurementsCommand(clientId, id, measurments)));
                     });
         }
 

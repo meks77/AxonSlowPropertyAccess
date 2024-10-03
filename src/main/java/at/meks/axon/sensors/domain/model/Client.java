@@ -1,13 +1,7 @@
 package at.meks.axon.sensors.domain.model;
 
 
-import at.meks.axon.sensors.domain.commands.AddManyMeasurementsCommand;
-import at.meks.axon.sensors.domain.commands.AddMeasurementCommand;
-import at.meks.axon.sensors.domain.commands.AddSensorCommand;
-import at.meks.axon.sensors.domain.commands.ClientRegistrationCommand;
-import at.meks.axon.sensors.domain.events.ClientRegisteredEvent;
-import at.meks.axon.sensors.domain.events.SensorAddedEvent;
-import at.meks.axon.sensors.domain.events.ValueMeasuredEvent;
+import at.meks.axon.sensors.domain.Api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -30,8 +24,8 @@ public class Client {
     private List<Sensor> sensors = new LinkedList<>();
 
     @CommandHandler
-    public Client(ClientRegistrationCommand command) {
-        AggregateLifecycle.apply(new ClientRegisteredEvent(command.clientId()));
+    public Client(Api.Commands.ClientRegistrationCommand command) {
+        AggregateLifecycle.apply(new Api.Events.ClientRegisteredEvent(command.clientId()));
     }
 
     protected Client() {
@@ -39,32 +33,32 @@ public class Client {
     }
 
     @EventSourcingHandler
-    protected void on(ClientRegisteredEvent event) {
+    protected void on(Api.Events.ClientRegisteredEvent event) {
         this.id = event.clientId();
     }
 
     @CommandHandler
-    public void addSensor(AddSensorCommand command) {
-        AggregateLifecycle.apply(new SensorAddedEvent(command.sensorId()));
+    public void addSensor(Api.Commands.AddSensorCommand command) {
+        AggregateLifecycle.apply(new Api.Events.SensorAddedEvent(command.sensorId()));
     }
 
     @EventSourcingHandler
-    protected void on(SensorAddedEvent event) {
+    protected void on(Api.Events.SensorAddedEvent event) {
         sensors.add(new Sensor(event.sensorId()));
     }
 
     @CommandHandler
-    public void addMeassurement(AddMeasurementCommand command) {
-        AggregateLifecycle.apply(new ValueMeasuredEvent(command.sensorId(),
-                                                        command.measurementId(),
-                                                        command.unit(),
-                                                        command.measuredValue()));
+    public void addMeassurement(Api.Commands.AddMeasurementCommand command) {
+        AggregateLifecycle.apply(new Api.Events.ValueMeasuredEvent(command.sensorId(),
+                                                                   command.measurementId(),
+                                                                   command.unit(),
+                                                                   command.measuredValue()));
     }
 
     @CommandHandler
-    public void addMeasurements(AddManyMeasurementsCommand command) {
+    public void addMeasurements(Api.Commands.AddManyMeasurementsCommand command) {
         Arrays.stream(command.measurements())
-              .map(m -> new ValueMeasuredEvent(command.sensorId(), m.measurementId(), m.unit(), m.measuredValue()))
+              .map(m -> new Api.Events.ValueMeasuredEvent(command.sensorId(), m.measurementId(), m.unit(), m.measuredValue()))
               .forEach(AggregateLifecycle::apply);
     }
 
